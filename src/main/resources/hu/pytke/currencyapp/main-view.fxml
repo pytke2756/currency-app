@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+
+<VBox alignment="TOP_CENTER" maxHeight="600.0" maxWidth="780.0" minHeight="520.0" minWidth="700.0" prefHeight="520.0" prefWidth="700.0" spacing="20.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="hu.pytke.currencyapp.HelloController">
+    <padding>
+        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+    </padding>
+   <children>
+      <HBox alignment="CENTER" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="200.0" spacing="20.0">
+         <children>
+            <TextField fx:id="input_quantity_from" />
+            <ComboBox fx:id="cb_from_currency" prefWidth="150.0" />
+            <Label text="to" />
+            <ComboBox fx:id="cb_to_currency" prefWidth="150.0" />
+            <Label fx:id="lbl_total" text="0" />
+         </children>
+      </HBox>
+      <Label text="Chart Coming Soon...">
+         <font>
+            <Font size="33.0" />
+         </font>
+      </Label>
+   </children>
+</VBox>
