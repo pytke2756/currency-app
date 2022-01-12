@@ -30,55 +30,11 @@ public class MainController {
     @FXML
     private Label lbl_total;
 
-    private ArrayList<String> currencies;
-
     public void initialize() throws IOException {
-        currencies = currencies();
-        rendez(currencies);
-        cb_from_currency.getItems().addAll(currencies);
+        cb_from_currency.getItems().addAll(ApiRequestHelper.getAllCurrencies());
         cb_from_currency.getSelectionModel().selectFirst();
-        cb_to_currency.getItems().addAll(currencies);
+        cb_to_currency.getItems().addAll(ApiRequestHelper.getAllCurrencies());
         cb_to_currency.getSelectionModel().selectFirst();
-    }
-
-    private ArrayList<String> currencies() throws IOException {
-        ArrayList<String> currList = new ArrayList<>();
-
-        URL url = new URL("https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json");
-        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-        con.setRequestMethod("GET");
-        con.setRequestProperty("Content-Type", "application/json");
-
-        con.setConnectTimeout(5000);
-        con.setReadTimeout(5000);
-
-        int status = con.getResponseCode();
-        System.out.println("Status code: " + status);
-
-        BufferedReader br;
-        String line;
-        StringBuilder responseContent = new StringBuilder();
-        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
-
-        line = br.readLine();
-        while(line != null){
-            responseContent.append(line);
-            line = br.readLine();
-        }
-
-        JSONObject jsonObject = new JSONObject((responseContent.toString()));
-
-        for (Iterator<String> it = jsonObject.keys(); it.hasNext(); ) {
-            String item = it.next();
-            currList.add(item);
-        }
-
-        for (String item : currList) {
-            System.out.println(item);
-        }
-
-
-        return currList;
     }
 
     private String change(String from, String to) throws IOException {
@@ -162,12 +118,5 @@ public class MainController {
         lbl_total.setText(String.valueOf(totalAmout));
     }
 
-    private void rendez(ArrayList<String> list){
-        Collections.sort(list, new Comparator<String>() {
-            @Override
-            public int compare(String o1, String o2) {
-                return o1.compareTo(o2);
-            }
-        });
-    }
+
 }
