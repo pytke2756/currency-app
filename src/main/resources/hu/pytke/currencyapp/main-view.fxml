@@ -10,7 +10,7 @@
       <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
    </padding>
    <HBox alignment="CENTER" maxHeight="35.0" minHeight="35.0" prefHeight="35.0" prefWidth="200.0" spacing="20.0">
-      <TextField fx:id="input_quantity_from" onInputMethodTextChanged="#quantityChanged" />
+      <TextField fx:id="input_quantity_from" onKeyPressed="#quantityChanged" />
       <ComboBox fx:id="cb_from_currency" prefWidth="150.0" />
       <Label text="to" />
       <ComboBox fx:id="cb_to_currency" prefWidth="150.0" />
