@@ -14,7 +14,9 @@ import java.util.Comparator;
 import java.util.Iterator;
 
 public class ApiRequestHelper {
-    private static final String CURRENCIES = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/latest/currencies.json";
+    private static final String CURRENCIES = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2022-01-11/currencies.json";
+    private static final String CHANGE_CURRENCIES = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2022-01-11/currencies/";
+    // hozzá kell fűzni mindig a két valutát pl : "huf/eur.json"
     private static final String GET = "GET";
 
     private static URL url;
@@ -48,6 +50,43 @@ public class ApiRequestHelper {
         }
         rendez(currList);
         return currList;
+    }
+
+    public static float quantityChanged(String fromValue, String toValue, String quantityFrom) throws IOException {
+
+        String changeUrl = (new StringBuilder().append(CHANGE_CURRENCIES)
+                                .append(fromValue)
+                                .append("/")
+                                .append(toValue)
+                                .append(".json"))
+                                .toString();
+
+        //String changeUrlMethodTwo = CHANGE_CURRENCIES + fromValue + "/" + toValue + ".json";
+        URL url = new URL(changeUrl);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod(GET);
+
+        con.setRequestProperty("Content-Type", "application/json");
+
+        con.setConnectTimeout(5000);
+        con.setReadTimeout(5000);
+
+        int status = con.getResponseCode();
+        System.out.println("Status code: " + status);
+
+        br = new BufferedReader(new InputStreamReader(con.getInputStream()));
+
+        responseContent = response(br);
+
+        JSONObject jsonObject = new JSONObject((responseContent.toString()));
+
+        //System.out.println(jsonObject.getFloat(to));
+
+        float quantity = Float.parseFloat(quantityFrom);
+        float simpleChange = jsonObject.getFloat(toValue);
+        float totalAmout = quantity * simpleChange;
+
+        return totalAmout;
     }
 
 
