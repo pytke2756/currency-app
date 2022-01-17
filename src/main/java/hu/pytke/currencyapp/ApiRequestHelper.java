@@ -8,6 +8,9 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
+import java.time.Duration;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -18,6 +21,7 @@ public class ApiRequestHelper {
     private static final String CHANGE_CURRENCIES = "https://cdn.jsdelivr.net/gh/fawazahmed0/currency-api@1/2022-01-11/currencies/";
     // hozzá kell fűzni mindig a két valutát pl : "huf/eur.json"
     private static final String GET = "GET";
+    private static ArrayList<String> dates;
 
     private static URL url;
 
@@ -107,5 +111,20 @@ public class ApiRequestHelper {
                 return o1.compareTo(o2);
             }
         });
+    }
+
+    private static void daysCountToDatesList(){
+        dates = new ArrayList<>();
+
+        LocalDate now = LocalDate.now();
+        now = now.minusDays(1);
+        LocalDate first = LocalDate.parse("2020-11-22", DateTimeFormatter.ISO_LOCAL_DATE);
+
+        Duration diff = Duration.between(first.atStartOfDay(), now.atStartOfDay());
+        long diffDays = diff.toDays();
+        for (int i = 0; i <= diffDays; i++) {
+            dates.add(first.toString());
+            first = first.plusDays(1);
+        }
     }
 }
